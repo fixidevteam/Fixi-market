@@ -37,7 +37,7 @@ const NavBar = () => {
   }, [location]);
 
   const navbarClasses = `
-    w-full z-50 transition-all duration-300 
+    fixed w-full z-50 transition-all duration-300 
     ${isScrolled ? "bg-white shadow-lg py-2" : "bg-white py-4"}
   `;
 
