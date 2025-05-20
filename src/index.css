@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  color: #bb0102;
+  color: #ffffff;
+  color: #000000;
+  color: #54595f;
+  font-family: montserat;
+  font-family: roboto;
+  border-radius: 25px;
+}
