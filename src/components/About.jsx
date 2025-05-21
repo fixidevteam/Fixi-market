@@ -9,7 +9,7 @@ const About = () => {
             {/* Text Content */}
             <div className="flex-1 space-y-6">
               <h2 className="text-3xl font-bold text-black">
-                Qu'est-ce que{" "}
+                Qu'est-ce que
                 <span className="text-black text-4xl font-bold">FI</span>
                 <span className="text-primary text-4xl font-bold">XI</span> ?
               </h2>
@@ -59,7 +59,7 @@ const About = () => {
 
       <section>
         <div className="bg-gray-100 py-12 px-6">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-center">
+          <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row gap-8 items-center">
             {/* Image Section */}
             <div className="flex-1 flex justify-center">
               <a
@@ -83,23 +83,18 @@ const About = () => {
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
-                  Qu'est-ce que{" "}
+                  Qu'est-ce que
                   <span className="text-black text-4xl font-bold">FI</span>
-                  <span className="text-[#BB0102] text-4xl font-bold">XI</span>
+                  <span className="text-primary text-4xl font-bold">XI</span>
                   <span className="text-black text-4xl font-bold">-</span>
-                  <span className="text-[#1d5197] text-4xl font-bold">
-                    plus
-                  </span>{" "}
-                  ?
+                  <span className="text-accent text-4xl font-bold">plus</span>?
                 </a>
               </h2>
               <p className="text-lg text-gray-800">
                 <span className="text-black font-bold text-xl">FI</span>
-                <span className="text-[#BB0102] font-bold text-xl">XI</span>
+                <span className="text-primary font-bold text-xl">XI</span>
                 <span className="text-black font-bold text-xl">–</span>
-                <span className="text-[#1d5197] font-bold text-xl">
-                  plus
-                </span>{" "}
+                <span className="text-accent font-bold text-xl">plus</span>
                 est une plateforme intelligente qui centralise et simplifie la
                 gestion de tous vos besoins automobiles et administratifs.
               </p>
@@ -122,9 +117,9 @@ const About = () => {
                 </li>
               </ul>
               <p className="text-lg text-gray-800">
-                Avec{" "}
+                Avec
                 <strong>
-                  FIXI<span className="text-[#1d5197]">+</span>
+                  FIXI<span className="text-accent">+</span>
                 </strong>
                 , gagnez du temps, évitez les tracas administratifs et
                 bénéficiez d’un réseau de professionnels de confiance. Adoptez

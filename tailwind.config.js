@@ -6,8 +6,8 @@ export default {
       colors: {
         primary: "#bb0102",
         secondary: "#54595f",
+        accent: "#1d5197",
       },
-      
     },
   },
   plugins: [],
