@@ -1,9 +1,9 @@
 const ServiceCard = ({ icon, title, description, link }) => {
   return (
     <div className="bg-white rounded-[24px] border border-black p-4 text-center">
-      <div className="">
-        <div className="">
-          <div className="">
+      <div>
+        <div>
+          <div>
             <a
               href={link}
               className="text-sm inline-block text-primary hover:text-black"
@@ -11,6 +11,7 @@ const ServiceCard = ({ icon, title, description, link }) => {
               {icon}
             </a>
           </div>
+          <div className="w-24 h-[2px] bg-black my-1 mx-auto"></div>
           <div className="text-black">
             <h3 className="text-xl font-semibold">
               <a href={link}>{title}</a>

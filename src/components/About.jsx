@@ -56,7 +56,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      //
+
       <section>
         <div className="bg-gray-100 py-12 px-6">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-center">

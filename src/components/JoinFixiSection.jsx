@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const JoinFixiSection = () => {
   return (
-    <div className="bg-white py-16 px-6">
+    <div className="bg-gray-100 py-16 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
         {/* Text Content */}
         <div className="flex-1 space-y-6">
