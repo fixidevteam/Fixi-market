@@ -57,7 +57,7 @@ const JoinFixiSection = () => {
         </div>
 
         {/* Image */}
-        <div className="flex-1 hidden md:block transform hover:scale-110 transition-transform duration-300">
+        <div className="hidden md:block transform hover:scale-110 transition-transform duration-300">
           <img
             src="./images/mecanicien.webp"
             alt="mécanicien"
