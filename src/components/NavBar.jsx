@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "./Button";
+import { Menu, X } from "lucide-react";
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,7 +11,7 @@ const NavBar = () => {
   const navigation = [
     { name: "Ville", path: "/garage" },
     { name: "FIXI plus", path: "https://fixi.ma/fixiapp/fixi-plus/login" },
-    { name: "Conseils d’entretien", path: "/carnet-entretien" },
+    { name: "Conseils d'entretien", path: "/carnet-entretien" },
     { name: "À propos", path: "/a-propos" },
     { name: "Contact", path: "/contact" },
   ];
@@ -42,66 +43,99 @@ const NavBar = () => {
   `;
 
   return (
-    <div>
-      <nav className={navbarClasses}>
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link
-            to="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <img src="/fixiLogo.svg" className="h-14" alt="FIXI Logo" />
-          </Link>
-          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+    <nav className={navbarClasses}>
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
+        <Link to="/" className="flex items-center">
+          <img src="/fixiLogo.svg" className="h-14" alt="FIXI Logo" />
+        </Link>
+
+        <div className="flex items-center space-x-4 md:order-2">
+          <div className="hidden md:block">
             <Button title={"Vous avez un garage ?"} />
-            <button
-              data-collapse-toggle="navbar-cta"
-              type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-              aria-controls="navbar-cta"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
-            </button>
           </div>
-          <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-            id="navbar-cta"
+          <button
+            className="md:hidden text-gray-500 focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-              {navigation.map((item) => (
-                <li key={item.name}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        <div className="hidden md:flex items-center md:order-1 md:w-auto">
+          <ul className="flex font-medium space-x-8 rtl:space-x-reverse">
+            {navigation.map((item) => (
+              <li key={item.name}>
+                {item.path.startsWith("http") ? (
+                  <a
+                    href={item.path}
+                    className={`${
+                      isActive(item.path)
+                        ? "text-primary"
+                        : "text-black hover:text-primary"
+                    } transition-colors duration-200`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
                   <Link
                     to={item.path}
                     className={`${
                       isActive(item.path)
                         ? "text-primary"
                         : "text-black hover:text-primary"
-                    } block  py-2 px-3 transition-colors duration-200`}
+                    } transition-colors duration-200`}
                   >
                     {item.name}
                   </Link>
-                </li>
-              ))}
-            </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white absolute top-full left-0 w-full py-4 shadow-lg animate-fade-in">
+          <div className="container mx-auto px-4 flex flex-col space-y-4">
+            {navigation.map((item) => (
+              <div key={item.name}>
+                {item.path.startsWith("http") ? (
+                  <a
+                    href={item.path}
+                    className={`${
+                      isActive(item.path)
+                        ? "text-primary"
+                        : "text-black hover:text-primary"
+                    } block py-2 transition-colors duration-200`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={`${
+                      isActive(item.path)
+                        ? "text-primary"
+                        : "text-black hover:text-primary"
+                    } block py-2 transition-colors duration-200`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
+            ))}
+            <div className="pt-2">
+              <Button title={"Vous avez un garage ?"} />
+            </div>
           </div>
         </div>
-      </nav>
-    </div>
+      )}
+    </nav>
   );
 };
 
