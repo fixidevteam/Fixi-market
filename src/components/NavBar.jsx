@@ -129,7 +129,7 @@ const NavBar = () => {
                 )}
               </div>
             ))}
-            <div className="pt-2">
+            <div className="py-2">
               <Button title={"Vous avez un garage ?"} />
             </div>
           </div>
