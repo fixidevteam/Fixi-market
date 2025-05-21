@@ -18,8 +18,7 @@ const Hero = () => {
           <div className="container mx-auto px-4">
             <div className="ml-4 md:ml-12">
               <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-center">
-                Trouvez un garage automobile facilement <br /> FIXI un
-                rendez-vous
+                Trouvez un garage automobile facilement <br /> FI<span className="text-primary">XI</span> un rendez-vous
               </h1>
               {/* search */}
               <div className="bg-white max-w-5xl mx-auto p-6 md:p-8 rounded-lg">
