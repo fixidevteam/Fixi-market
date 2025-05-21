@@ -22,37 +22,47 @@ const Hero = () => {
                 rendez-vous
               </h1>
               {/* search */}
-              <div className="bg-white max-w-5xl mx-auto p-8 flex justify-between items-center gap-4 rounded-lg">
-                {/* garage name */}
-                <div className="w-full">
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                    placeholder="Nom du garage"
-                  />
-                </div>
-                {/* domaine */}
-                <div className="w-full">
-                  <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5">
-                    <option selected>Tout les domaines</option>
-                    <option value="lavage">Lavage</option>
-                    <option value="depannage">Dépannage</option>
-                  </select>
-                </div>
-                {/* villes */}
-                <div className="w-full">
-                  <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5">
-                    <option selected>Tout les villes</option>
-                    <option value="marrakech">Marrakech</option>
-                    <option value="casablance">Casablanca</option>
-                    <option value="rabat">Rabat</option>
-                  </select>
-                </div>
-                {/* btn */}
-                <div className="w-full">
-                  <Button title={"Chercher"} />
+              <div className="bg-white max-w-5xl mx-auto p-6 md:p-8 rounded-lg">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  {/* garage name */}
+                  <div className="w-full md:w-1/4">
+                    <input
+                      type="text"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                      placeholder="Nom du garage"
+                    />
+                  </div>
+
+                  {/* domaine */}
+                  <div className="w-full md:w-1/4">
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5">
+                      <option value="" disabled selected>
+                        Tout les domaines
+                      </option>
+                      <option value="lavage">Lavage</option>
+                      <option value="depannage">Dépannage</option>
+                    </select>
+                  </div>
+
+                  {/* villes */}
+                  <div className="w-full md:w-1/4">
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5">
+                      <option value="" disabled selected>
+                        Tout les villes
+                      </option>
+                      <option value="marrakech">Marrakech</option>
+                      <option value="casablance">Casablanca</option>
+                      <option value="rabat">Rabat</option>
+                    </select>
+                  </div>
+
+                  {/* btn */}
+                  <div className="w-full md:w-1/4">
+                    <Button title="Chercher" className="w-full" />
+                  </div>
                 </div>
               </div>
+
               {/* search close */}
             </div>
           </div>
