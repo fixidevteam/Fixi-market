@@ -9,7 +9,7 @@ const JoinFixiSection = () => {
         <div className="flex-1 space-y-6">
           <h2 className="text-3xl font-bold text-gray-900">
             Vous avez un garage ? Rejoignez
-            <span className="text-black text-4xl font-bold">FI</span>
+            <span className="text-black text-4xl font-bold"> FI</span>
             <span className="text-primary text-4xl font-bold">XI</span>
           </h2>
 
