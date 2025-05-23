@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import api from "../../api/axiosConfig";
 
 const AppointmentBooking = ({ garageRef }) => {
   // State variables
@@ -71,24 +72,21 @@ const AppointmentBooking = ({ garageRef }) => {
     return vinRegex.test(vin);
   };
 
-  // API functions
+  // API functions using axios
   const fetchAvailableDates = async () => {
     setIsLoading((prev) => ({ ...prev, dates: true }));
     try {
-      const response = await fetch(
-        `https://fixi.ma/fixiapp/api/available-datesShort?garage_ref=${garageRef}`
+      const response = await api.get(
+        `/available-datesShort?garage_ref=${garageRef}`
       );
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const data = await response.json();
-      setAvailableDates(data.available_dates);
-      setUnavailableDates(data.unavailable_dates);
-      setServices(data.services || []);
-      setMarques(data.marques || []);
+      setAvailableDates(response.available_dates || []);
+      setUnavailableDates(response.unavailable_dates || []);
+      setServices(response.services || []);
+      setMarques(response.marques || []);
 
       // Select first available date by default
-      if (data.available_dates.length > 0) {
-        selectDate(data.available_dates[0].date);
+      if (response.available_dates?.length > 0) {
+        selectDate(response.available_dates[0].date);
       }
     } catch (error) {
       console.error("Error fetching dates:", error);
@@ -104,13 +102,10 @@ const AppointmentBooking = ({ garageRef }) => {
   const fetchTimeSlots = async (date) => {
     setIsLoading((prev) => ({ ...prev, times: true }));
     try {
-      const response = await fetch(
-        `https://fixi.ma/fixiapp/api/time-slotsShort?garage_ref=${garageRef}&date=${date}`
+      const response = await api.get(
+        `/time-slotsShort?garage_ref=${garageRef}&date=${date}`
       );
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const data = await response.json();
-      setTimeSlots(data.time_slots || []);
+      setTimeSlots(response.time_slots || []);
       setShowingAllSlots(false);
     } catch (error) {
       console.error("Error fetching time slots:", error);
@@ -190,34 +185,20 @@ const AppointmentBooking = ({ garageRef }) => {
     setError((prev) => ({ ...prev, booking: "" }));
 
     try {
-      const response = await fetch(
-        "https://fixi.ma/fixiapp/api/book-appointment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            full_name: formData.fullName,
-            phone: formData.phone,
-            email: formData.email,
-            categorie_de_service: formData.categorie_de_service,
-            modele: formData.modele,
-            objet_du_RDV: formData.objet_du_RDV,
-            vin: formData.vin.toUpperCase(),
-            garage_ref: garageRef,
-            appointment_day: selectedDate,
-            appointment_time: selectedTime + ":00",
-          }),
-        }
-      );
+      const response = await api.post("/book-appointment", {
+        full_name: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        categorie_de_service: formData.categorie_de_service,
+        modele: formData.modele,
+        objet_du_RDV: formData.objet_du_RDV,
+        vin: formData.vin.toUpperCase(),
+        garage_ref: garageRef,
+        appointment_day: selectedDate,
+        appointment_time: selectedTime + ":00",
+      });
 
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const data = await response.json();
-
-      if (data.status === "verification_required") {
+      if (response.status === "verification_required") {
         startCountdown();
         setIsBookingModalOpen(false);
         setIsVerificationModalOpen(true);
@@ -230,6 +211,7 @@ const AppointmentBooking = ({ garageRef }) => {
       setError((prev) => ({
         ...prev,
         booking:
+          error.message ||
           "Une erreur est survenue lors de la réservation. Veuillez réessayer.",
       }));
     } finally {
@@ -252,35 +234,21 @@ const AppointmentBooking = ({ garageRef }) => {
     setError((prev) => ({ ...prev, verification: "" }));
 
     try {
-      const response = await fetch(
-        "https://fixi.ma/fixiapp/api/appointments/verify",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            verification_code: formData.verificationCode.toString(),
-            full_name: formData.fullName,
-            phone: formData.phone,
-            categorie_de_service: formData.categorie_de_service,
-            modele: formData.modele,
-            objet_du_RDV: formData.objet_du_RDV,
-            vin: formData.vin.toUpperCase(),
-            garage_ref: garageRef,
-            appointment_day: selectedDate,
-            appointment_time: selectedTime + ":00",
-          }),
-        }
-      );
+      const response = await api.post("/appointments/verify", {
+        email: formData.email,
+        verification_code: formData.verificationCode.toString(),
+        full_name: formData.fullName,
+        phone: formData.phone,
+        categorie_de_service: formData.categorie_de_service,
+        modele: formData.modele,
+        objet_du_RDV: formData.objet_du_RDV,
+        vin: formData.vin.toUpperCase(),
+        garage_ref: garageRef,
+        appointment_day: selectedDate,
+        appointment_time: selectedTime + ":00",
+      });
 
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const data = await response.json();
-
-      if (data.message === "Appointment booked successfully!") {
+      if (response.message === "Appointment booked successfully!") {
         stopCountdown();
         setIsVerificationModalOpen(false);
         setIsSuccessModalOpen(true);
@@ -289,18 +257,18 @@ const AppointmentBooking = ({ garageRef }) => {
         const form = document.createElement("form");
         form.method = "POST";
         form.action = `https://fixi.ma/confirmation-rdv/?ejkn2=${
-          data.account ? "hzne2" : "kmal4"
-        }&garage_ref=${data.ref}`;
+          response.account ? "hzne2" : "kmal4"
+        }&garage_ref=${response.ref}`;
 
         const appointmentInput = document.createElement("input");
         appointmentInput.type = "hidden";
         appointmentInput.name = "appointment";
-        appointmentInput.value = JSON.stringify(data.appointment);
+        appointmentInput.value = JSON.stringify(response.appointment);
 
         const garageInput = document.createElement("input");
         garageInput.type = "hidden";
         garageInput.name = "garage";
-        garageInput.value = JSON.stringify(data.garage);
+        garageInput.value = JSON.stringify(response.garage);
 
         form.appendChild(appointmentInput);
         form.appendChild(garageInput);
@@ -309,14 +277,18 @@ const AppointmentBooking = ({ garageRef }) => {
       } else {
         setError((prev) => ({
           ...prev,
-          verification: "Code de vérification incorrect. Veuillez réessayer.",
+          verification:
+            error.message ||
+            "Code de vérification incorrect. Veuillez réessayer.",
         }));
       }
     } catch (error) {
       console.error("Error verifying appointment:", error);
       setError((prev) => ({
         ...prev,
-        verification: "Code de vérification incorrect. Veuillez réessayer.",
+        verification:
+          error.message ||
+          "Code de vérification incorrect. Veuillez réessayer.",
       }));
     } finally {
       setIsLoading((prev) => ({ ...prev, verification: false }));
@@ -325,22 +297,10 @@ const AppointmentBooking = ({ garageRef }) => {
 
   const handleResendCode = async () => {
     try {
-      const response = await fetch(
-        "https://fixi.ma/fixiapp/api/resend-verification-code",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            phone: formData.phone,
-            full_name: formData.fullName,
-          }),
-        }
-      );
-
-      if (!response.ok) throw new Error("Network response was not ok");
+      await api.post("/resend-verification-code", {
+        phone: formData.phone,
+        full_name: formData.fullName,
+      });
 
       // Reset countdown
       stopCountdown();
@@ -359,6 +319,7 @@ const AppointmentBooking = ({ garageRef }) => {
       setError((prev) => ({
         ...prev,
         booking:
+          error.message ||
           "Une erreur est survenue lors de l'envoi du code. Veuillez réessayer.",
       }));
     }
@@ -398,7 +359,7 @@ const AppointmentBooking = ({ garageRef }) => {
     };
   }, []);
 
-  // Render functions
+  // Render functions (same as before)
   const renderDates = () => {
     if (isLoading.dates) {
       return (
@@ -499,10 +460,7 @@ const AppointmentBooking = ({ garageRef }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
-        Choisissez un rendez-vous
-      </h2>
+    <div className="bg-gray-50 p-4">
       {/* Main Container */}
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         {/* Date Selection Section */}
