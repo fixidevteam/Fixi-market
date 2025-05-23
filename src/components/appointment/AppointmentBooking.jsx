@@ -460,7 +460,7 @@ const AppointmentBooking = ({ garageRef }) => {
   };
 
   return (
-    <div className="bg-gray-50 p-4">
+    <div className="bg-white p-6 rounded-lg shadow-md">
       {/* Main Container */}
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         {/* Date Selection Section */}

@@ -11,7 +11,7 @@ const GarageDetailsPage = () => {
   return (
     <div className="bg-gray-100">
       <Banner title={"Kech Polish"} />
-      <div className="max-w-6xl mx-auto py-10">
+      <div className="max-w-6xl mx-auto px-4 py-10">
         {/* content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* box 1 : details of garage */}
