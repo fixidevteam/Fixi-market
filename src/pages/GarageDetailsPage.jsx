@@ -3,7 +3,7 @@ import CallToActionBooking from "../components/appointment/CallToActionBooking";
 import Banner from "../components/Banner";
 import ContactInfo from "../components/garage/ContactInfo";
 import GarageCard from "../components/garage/GarageCard";
-import GaragePresentation from "../components/garage/garagePresentation";
+import GaragePresentation from "../components/garage/GaragePresentation";
 import SimilarGarages from "../components/garage/SimilarGarages";
 
 const GarageDetailsPage = () => {
